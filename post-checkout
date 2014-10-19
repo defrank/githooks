@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# A hook script to properly setup submodules after successful checkout.
+#
+# To enable this hook, create a symlink:
+#
+#     % ln -s "$PWD/githooks/post-checkout" .git/hooks/post-checkout
+#
+# To disable this hook, unlink it:
+#
+#     % unlink .git/hooks/post-checkout
+#
+
+# Arguments
+prevHEAD="$1"
+newHEAD="$2"
+checkoutType="$3"
+
+function update_submodules() {
+    ############################################################################
+    # THIS FUNCTION SHOULD BE IN SYNC WITH 'post-merge'
+    ############################################################################
+
+    local GITDIR="$PWD" MODDIR MOD MODPATH
+    # Find the root directory of this repository so that submodules can be updated 
+    # from any directory.
+    while [[ -n "$GITDIR" ]] && [ ! -d "$GITDIR/.git" ] && [ "$GITDIR" != '/' ]
+    do GITDIR="$(dirname "$GITDIR")"
+    done
+
+    local MODDIR="${GITDIR}/modules"
+    ls -1 "$MODDIR" | while IFS=$'\n' read MOD
+    do
+        MODPATH="${MODDIR}/${MOD}"
+        if git submodule status "$MODPATH" 2>/dev/null
+        # First, clean/deinitialize the submodule.
+        # Initialize the submodule.
+        # Synchronize the submodule.
+        # Finally, update/checkout the submodule.
+        then git submodule deinit "$MODPATH" \
+                && git submodule init "$MODPATH" \
+                && git submodule sync "$MODPATH" \
+                && (git submodule update --init --recursive "$MODPATH" 2>/dev/null \
+                    || git submodule update "$MODPATH")
+        else rm -rf "$MODPATH"
+        fi
+    done
+}
+
+[[ "$checkoutType" == 1 ]] && update_submodules
+
+unset prevHEAD newHEAD checkoutType
