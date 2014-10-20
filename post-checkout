@@ -29,7 +29,7 @@ function update_submodules() {
     done
 
     local MODDIR="${GITDIR}/modules"
-    ls -1 "$MODDIR" | while IFS=$'\n' read MOD
+    ls -A1 "$MODDIR" | while IFS=$'\n' read MOD
     do
         MODPATH="${MODDIR}/${MOD}"
         if git submodule status "$MODPATH" 2>/dev/null
