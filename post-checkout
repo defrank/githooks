@@ -12,8 +12,8 @@
 #
 
 # Arguments
-prevHEAD="$1"
-newHEAD="$2"
+prevHead="$1"
+newHead="$2"
 checkoutType="$3"
 
 update_submodules() {
@@ -37,4 +37,4 @@ update_submodules() {
 
 [ "$checkoutType" = 1 ] && update_submodules
 
-unset prevHEAD newHEAD checkoutType
+unset prevHead newHead checkoutType
