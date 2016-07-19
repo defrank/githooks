@@ -22,3 +22,9 @@ location under `$GIT_PROJECT_ROOT/modules/`.
         
 1. Now try git-pull and git-checkout and see your submodules auto-update :smile:.
 If you feel satisfied, git-add the changes and commit them!
+
+## Guidelines
+### Issues
+* [Construct issue as user story](https://www.zenhub.com/blog/best-practices-for-github-issues/):
+    * "As a (user type), I want to (task) so that (goal)."
+    <br/>"As a (customer), I want to (create an account) so that (I can make purchases)."
