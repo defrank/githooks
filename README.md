@@ -3,6 +3,9 @@ Git hook scripts.  The initial problem I tried to resolve was managing submodule
 Having to remember to constantly run `git submodule update` when pulling or checking out a branch.
 I decided to solve this issue with another submodule.  The idea is to symlink them to your project's hooks.
 
+I will strive to make the default githooks always be acceptable for any project, such as syncing submodules.
+I will try to devise a system for githook add-ons if they begin to stray from this.
+
 ## Install
 NOTE: The install script currently only symlinks all hooks, but will eventually add an option for selective
 symlink; however, seeing as the only two hooks are closely related and offer only the feature to manage
